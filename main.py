@@ -21,8 +21,10 @@ Model (fit entirely from the case file at run time; standard library only, no ne
     unlock later in the UTC day, e.g. a PC unlock at 17:00 UTC: its hour 1 is pre-unlock noise) and is
     left out — GTA VI is a rolling-midnight console launch, like the practice cases;
   - comparables whose unlock text describes a rolling / midnight-local unlock weigh double;
-  - the pooled quantiles are widened around the median by a factor 1.15 in log space (the backtest's
-    calibration: raw pooled quantiles run slightly narrow for a launch this size);
+  - the pooled quantiles are widened around the median by a factor 1.05 in log space (recalibrated
+    2026-11-18: the first calibration's 1.15 over-widened — every factor in 0.95-1.10 beats it on
+    both evaluations, and 1.05 is the balanced point of that range: leave-one-out 0.3142 -> 0.3129
+    with 18 of 29 targets improved, practice mean pinball 0.3021 -> 0.2973);
   - an hour with no pooled samples falls back to the house persistence form p1 * exp(z_tau * 0.15 *
     sqrt(h - 1)).
 
@@ -65,7 +67,7 @@ MIN_HOUR1 = 200          # a comparable's hour-1 print must be at least this to 
 MIN_DAY_HOURS = 18       # and its release day must carry at least this many of hours 2..24
 MIN_HOUR1_SHARE = 0.05   # hour 1 under this share of the day peak = a later global unlock, not rolling
 ROLLING_WEIGHT = 2.0     # weight multiplier for rolling / midnight-local unlocks
-SPREAD_SCALE = 1.15      # widen pooled quantiles around the median by this, in log space
+SPREAD_SCALE = 1.05      # widen pooled quantiles around the median by this, in log space (recalibrated)
 
 
 def round2(x: float) -> float | int:

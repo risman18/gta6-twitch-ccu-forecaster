@@ -31,15 +31,16 @@ Pool discipline, tuned by leave-one-out backtest over the comparables (`backtest
 - a comparable whose hour 1 is under 5% of its own day peak belongs to a different regime — a single
   global unlock later in the UTC day (its hour 1 is pre-unlock noise) — and is left out;
 - comparables with a rolling / midnight-local unlock weigh double;
-- the pooled quantiles are widened around the median by 1.15 in log space (raw pooled quantiles run
-  slightly narrow for a launch of this size);
+- the pooled quantiles are widened around the median by 1.05 in log space (recalibrated 2026-11-18:
+  the first calibration's 1.15 over-widened — every factor in 0.95–1.10 beats it on both the
+  leave-one-out backtest and the practice launches; 1.05 is the balanced point of that range);
 - an hour with no pooled samples falls back to the house persistence form.
 
 ## What it expects on the day
 
 On the final case's pool (the kit's comparables plus the four practice launches), the median curve
 dips to ≈ 0,69× hour 1 in hour 4, crosses 1,0× around hour 13, and **peaks at ≈ 2,04× the hour-1
-print in hour 22 (21:00–22:00 UTC)**, with an honest 5–95% band of roughly 0,75×–12,6× at the peak —
+print in hour 22 (21:00–22:00 UTC)**, with an honest 5–95% band of roughly 0,82×–10,7× at the peak —
 the upside tail is real: some analogues multiply many-fold when the big streamers go live. The scale
 is there for a seven-figure peak: the GTA VI category itself drew 1.418.094 viewers in a single hour
 for its August 2026 extended-look premiere. If hour 1 prints, say, 500k, the median peak call is
@@ -54,13 +55,17 @@ scale, lower is better):
 
 | target | this model | house persistence baseline |
 |---|---|---|
-| Marvel's Wolverine | 0,5936 | 0,8466 |
-| Red Dead Redemption 2 | 0,2385 | 0,3102 |
-| God of War Ragnarök | 0,1635 | 0,2023 |
-| Marvel's Spider-Man 2 | 0,2126 | 0,2899 |
-| **mean** | **0,3021** | **0,4122** |
+| Marvel's Wolverine | 0,5990 | 0,8466 |
+| Red Dead Redemption 2 | 0,2332 | 0,3102 |
+| God of War Ragnarök | 0,1523 | 0,2023 |
+| Marvel's Spider-Man 2 | 0,2046 | 0,2899 |
+| **mean** | **0,2973** | **0,4122** |
 
-≈ 27% below the house baseline's loss on every one of the four. (Wolverine is the hardest: its
+≈ 28% below the house baseline's loss on every one of the four. (Recalibrated 2026-11-18: widening
+1.15 → 1.05; the leave-one-out mean over the comparables moved 0,3142 → 0,3129 on the same change,
+with 18 of 29 targets improved. Wolverine alone moves the other way, +0,9% — its anchor print is the
+known outlier, and the narrower factors that help the other three most, 0,90–1,00, cost it up to
++4,6%; 1.05 is where the four-case balance lands.) (Wolverine is the hardest: its
 case hour-1 print sits well below its chart's first-hour point, which inflates every ratio — the
 baseline suffers the same anchor, worse.)
 
